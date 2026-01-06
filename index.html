@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umus Farm - Jamur Segar & Olahan Berkualitas</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #84cc16;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #65a30d;
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Ensure sections are visible by default - will be overridden by GSAP */
+        .product-card,
+        .advantage-card,
+        .step-card,
+        .testimonial-card {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800">
+    
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/0 backdrop-blur-none">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#beranda" class="text-2xl font-bold text-lime-600 hover:text-lime-700 transition-colors">
+                        🍄 Umus Farm
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#beranda" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Beranda</a>
+                        <a href="#tentang" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Tentang</a>
+                        <a href="#produk" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Produk</a>
+                        <a href="#keunggulan" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Keunggulan</a>
+                        <a href="#cara-pesan" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Cara Pesan</a>
+                        <a href="#kontak" class="nav-link text-gray-700 hover:text-lime-600 transition-colors font-medium">Kontak</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-lime-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#beranda" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Beranda</a>
+                <a href="#tentang" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Tentang</a>
+                <a href="#produk" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Produk</a>
+                <a href="#keunggulan" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Keunggulan</a>
+                <a href="#cara-pesan" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Cara Pesan</a>
+                <a href="#kontak" class="block px-3 py-2 text-gray-700 hover:text-lime-600">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-lime-50 via-stone-50 to-amber-50 pt-20">
+        <!-- Decorative elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-lime-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 float-animation"></div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 float-animation" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/2 w-72 h-72 bg-stone-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 float-animation" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 id="hero-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-800 mb-6 leading-tight">
+                    Jamur Segar & Olahan<br>
+                    <span class="text-lime-600">Berkualitas dari Umus Farm</span>
+                </h1>
+                <p id="hero-subtitle" class="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Menyediakan jamur segar dan olahan jamur berkualitas tinggi untuk kebutuhan rumah tangga & bisnis kuliner Anda
+                </p>
+                <div id="hero-buttons" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20pesan%20produk%20jamur." 
+                       target="_blank"
+                       class="cta-primary px-8 py-4 bg-lime-600 text-white rounded-full font-semibold text-lg hover:bg-lime-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        📱 Pesan via WhatsApp
+                    </a>
+                    <a href="#produk" 
+                       class="cta-secondary px-8 py-4 bg-white text-lime-600 border-2 border-lime-600 rounded-full font-semibold text-lg hover:bg-lime-50 transform hover:scale-105 transition-all duration-300">
+                        🍄 Lihat Produk
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Tentang Umus Farm -->
+    <section id="tentang" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-800 mb-6">
+                    Tentang Umus Farm
+                </h2>
+                <div class="section-content space-y-6 text-lg text-gray-600 leading-relaxed">
+                    <p>
+                        Umus Farm adalah usaha mikro kecil menengah (UMKM) yang berfokus pada budidaya dan pengolahan jamur berkualitas tinggi. 
+                        Dengan dedikasi terhadap kualitas dan kebersihan, kami menyediakan berbagai produk jamur segar dan olahan untuk memenuhi 
+                        kebutuhan konsumen rumah tangga hingga bisnis kuliner.
+                    </p>
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center">
+                                <span class="text-lime-600 font-bold">✓</span>
+                            </div>
+                            <p class="flex-1"><strong class="text-gray-800">Panen Jamur Setiap Hari</strong> - Kami memastikan produk yang Anda terima selalu segar dengan panen harian yang terkontrol.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center">
+                                <span class="text-lime-600 font-bold">✓</span>
+                            </div>
+                            <p class="flex-1"><strong class="text-gray-800">Proses Higienis & Terkontrol</strong> - Setiap tahap produksi dilakukan dengan standar kebersihan tinggi untuk menjamin kualitas produk.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center">
+                                <span class="text-lime-600 font-bold">✓</span>
+                            </div>
+                            <p class="flex-1"><strong class="text-gray-800">Cocok untuk Kebutuhan Rumahan dan Resto</strong> - Produk kami tersedia dalam berbagai ukuran dan kemasan untuk berbagai kebutuhan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Produk Unggulan -->
+    <section id="produk" class="py-20 bg-gradient-to-b from-white to-stone-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-800 mb-12">
+                Produk Unggulan
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Produk 1 -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="1.jpeg" alt="Jamur Tiram Segar" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Fresh Daily</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Jamur Tiram Segar 1 kg</h3>
+                        <div class="mb-4">
+                            <span class="text-sm text-gray-500 line-through mr-2">Rp 25.000</span>
+                            <span class="text-2xl font-bold text-lime-600">Rp 20.000</span>
+                            <span class="text-sm text-gray-600 ml-2">/kg</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Jamur tiram segar hasil panen harian dengan tekstur lembut dan rasa yang khas. 
+                            Cocok untuk berbagai olahan masakan rumahan.
+                        </p>
+                        <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20pesan%20Jamur%20Tiram%20Segar%201%20kg%20(Rp%2020.000)." 
+                           target="_blank"
+                           class="block w-full text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-700 transition-colors">
+                            Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Produk 2 -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="2.jpeg" alt="Jamur Crispy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Best Seller</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Jamur Tiram Coklat Segar 1 kg</h3>
+                        <div class="mb-4">
+                            <span class="text-sm text-gray-500 line-through mr-2">Rp 27.500</span>
+                            <span class="text-2xl font-bold text-lime-600">Rp 22.500</span>
+                            <span class="text-sm text-gray-600 ml-2">/kg</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Jamur tiram coklat segar dengan tekstur yang lebih kenyal dan rasa yang lebih gurih. 
+                            Sempurna untuk berbagai olahan masakan dan cocok sebagai pelengkap hidangan utama.
+                        </p>
+                        <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20pesan%20Jamur%20Tiram%20Coklat%20Segar%201%20kg%20(Rp%2022.500)." 
+                           target="_blank"
+                           class="block w-full text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-700 transition-colors">
+                            Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Produk 3 -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="3.jpeg" alt="Pesanan Custom" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Custom</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Pesanan Custom</h3>
+                        <div class="mb-4">
+                            <span class="text-lg font-semibold text-gray-700">Mulai dari</span>
+                            <span class="text-2xl font-bold text-lime-600 ml-2">Rp 20.000</span>
+                            <span class="text-sm text-gray-600 ml-2">/kg</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Pesan sesuai kebutuhan Anda! Tentukan jumlah kilogram yang diinginkan (minimal 1 kg). 
+                            Cocok untuk kebutuhan besar, acara, atau bisnis kuliner. Hubungi kami untuk konsultasi kebutuhan Anda.
+                        </p>
+                        <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20pesan%20custom.%20Saya%20mau%20request%20jumlah%20kilogram%20sesuai%20kebutuhan%20saya." 
+                           target="_blank"
+                           class="block w-full text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-700 transition-colors">
+                            Request Pesanan Custom
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Keunggulan -->
+    <section id="keunggulan" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+                Kenapa Memilih Umus Farm?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <!-- Keunggulan 1 -->
+                <div class="advantage-card text-center p-6 bg-gradient-to-br from-lime-50 to-stone-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🌱</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Jamur Segar Panen Harian</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Produk jamur kami dipanen setiap hari untuk memastikan kesegaran maksimal saat sampai di tangan Anda.
+                    </p>
+                </div>
+
+                <!-- Keunggulan 2 -->
+                <div class="advantage-card text-center p-6 bg-gradient-to-br from-lime-50 to-stone-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🛡️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Bebas Bahan Kimia Berbahaya</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Budidaya jamur kami menggunakan metode alami tanpa tambahan bahan kimia berbahaya, aman untuk dikonsumsi.
+                    </p>
+                </div>
+
+                <!-- Keunggulan 3 -->
+                <div class="advantage-card text-center p-6 bg-gradient-to-br from-lime-50 to-stone-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">💰</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Harga Terjangkau untuk UMKM</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Harga yang kompetitif dan terjangkau, cocok untuk kebutuhan rumah tangga maupun bisnis kuliner skala kecil.
+                    </p>
+                </div>
+
+                <!-- Keunggulan 4 -->
+                <div class="advantage-card text-center p-6 bg-gradient-to-br from-lime-50 to-stone-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🚚</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Pengiriman Cepat Area Sekitar</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Layanan pengiriman cepat untuk area sekitar, memastikan produk tetap segar saat sampai di tujuan.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Cara Pemesanan -->
+    <section id="cara-pesan" class="py-20 bg-gradient-to-b from-stone-50 to-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+                Cara Pemesanan
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Step 1 -->
+                    <div class="step-card text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="w-20 h-20 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Pilih Produk</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Pilih produk jamur yang diinginkan dari katalog kami. Tersedia berbagai varian sesuai kebutuhan Anda.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="w-20 h-20 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Klik Tombol Pesan</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Klik tombol "Pesan via WhatsApp" untuk langsung terhubung dengan tim kami dan melakukan pemesanan.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="w-20 h-20 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Konfirmasi & Proses</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Konfirmasi alamat dan detail pesanan Anda. Tim kami akan segera memproses pesanan Anda.
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20pesan%20produk%20jamur." 
+                       target="_blank"
+                       class="inline-block px-10 py-5 bg-lime-600 text-white rounded-full font-bold text-xl hover:bg-lime-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        📱 Pesan Sekarang via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Testimoni -->
+    <section id="testimoni" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+                Apa Kata Pelanggan?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Testimoni 1 -->
+                <div class="testimonial-card bg-gradient-to-br from-lime-50 to-stone-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-lime-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-lime-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            S
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Sari Dewi</h4>
+                            <p class="text-sm text-gray-600">Pelanggan Setia</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Jamur dari Umus Farm selalu segar dan berkualitas. Sudah langganan selama 6 bulan untuk kebutuhan resto saya. Pelayanannya juga sangat responsif!"
+                    </p>
+                    <div class="mt-4 text-lime-600">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <!-- Testimoni 2 -->
+                <div class="testimonial-card bg-gradient-to-br from-lime-50 to-stone-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-lime-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-lime-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            B
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Budi Santoso</h4>
+                            <p class="text-sm text-gray-600">Konsumen Rumahan</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Jamur crispy-nya enak banget! Keluarga saya suka sekali. Harganya juga terjangkau dan pengirimannya cepat. Recommended!"
+                    </p>
+                    <div class="mt-4 text-lime-600">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <!-- Testimoni 3 -->
+                <div class="testimonial-card bg-gradient-to-br from-lime-50 to-stone-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-lime-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-lime-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            R
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Rina Kartika</h4>
+                            <p class="text-sm text-gray-600">Pemilik Warung</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Produk jamur Umus Farm membantu meningkatkan kualitas menu di warung saya. Pelanggan puas dan omzet meningkat. Terima kasih Umus Farm!"
+                    </p>
+                    <div class="mt-4 text-lime-600">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Kontak / Footer -->
+    <section id="kontak" class="py-20 bg-gradient-to-b from-stone-100 via-lime-50 to-stone-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-4">
+                    Kontak Umus Farm
+                </h2>
+                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Hubungi kami untuk informasi produk, pemesanan, atau pertanyaan lainnya. Kami siap melayani Anda!
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <!-- Alamat -->
+                    <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-lime-100">
+                        <div class="w-20 h-20 bg-gradient-to-br from-lime-500 to-lime-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <span class="text-4xl">📍</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-gray-800 mb-3">Alamat</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Jl. Pertanian No. 123<br>
+                            Kecamatan, Kota<br>
+                            Indonesia
+                        </p>
+                        <a href="https://maps.google.com" target="_blank" class="inline-block mt-4 text-lime-600 hover:text-lime-700 font-semibold text-sm">
+                            Lihat di Peta →
+                        </a>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-lime-100">
+                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <span class="text-4xl">📱</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-gray-800 mb-3">WhatsApp</h3>
+                        <a href="https://wa.me/6285320302203" target="_blank" class="text-lime-600 hover:text-lime-700 font-bold text-lg block mb-2">
+                            +62 853-2030-2203
+                        </a>
+                        <p class="text-gray-500 text-sm mb-4">Respon cepat dalam 1 jam</p>
+                        <a href="https://wa.me/6285320302203?text=Halo%20Umus%20Farm,%20saya%20ingin%20bertanya%20tentang%20produk." 
+                           target="_blank"
+                           class="inline-block px-6 py-2 bg-green-500 text-white rounded-full font-semibold hover:bg-green-600 transition-colors text-sm">
+                            Chat Sekarang
+                        </a>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-lime-100">
+                        <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <span class="text-4xl">📷</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-gray-800 mb-3">Instagram</h3>
+                        <a href="https://instagram.com/umusfarm" target="_blank" class="text-lime-600 hover:text-lime-700 font-bold text-lg block mb-2">
+                            @umusfarm
+                        </a>
+                        <p class="text-gray-500 text-sm mb-4">Update produk & promo terbaru</p>
+                        <a href="https://instagram.com/umusfarm" 
+                           target="_blank"
+                           class="inline-block px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all text-sm">
+                            Follow Kami
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-gradient-to-b from-stone-800 to-stone-900 text-white pt-12 pb-8 mt-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <!-- Brand Column -->
+                    <div class="col-span-1 md:col-span-2">
+                        <h3 class="text-2xl font-bold text-lime-400 mb-4 flex items-center">
+                            🍄 Umus Farm
+                        </h3>
+                        <p class="text-gray-300 mb-4 leading-relaxed max-w-md">
+                            Menyediakan jamur segar dan olahan jamur berkualitas tinggi untuk kebutuhan rumah tangga & bisnis kuliner Anda. 
+                            Segar setiap hari, higienis, dan terjangkau.
+                        </p>
+                        <div class="flex space-x-4 mt-6">
+                            <a href="https://wa.me/6285320302203" 
+                               target="_blank" 
+                               class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-all transform hover:scale-110 shadow-lg">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://instagram.com/umusfarm" 
+                               target="_blank" 
+                               class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:from-pink-600 hover:to-purple-700 transition-all transform hover:scale-110 shadow-lg">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="text-lg font-bold text-lime-400 mb-4">Tautan Cepat</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#beranda" class="text-gray-300 hover:text-lime-400 transition-colors">Beranda</a></li>
+                            <li><a href="#tentang" class="text-gray-300 hover:text-lime-400 transition-colors">Tentang Kami</a></li>
+                            <li><a href="#produk" class="text-gray-300 hover:text-lime-400 transition-colors">Produk</a></li>
+                            <li><a href="#keunggulan" class="text-gray-300 hover:text-lime-400 transition-colors">Keunggulan</a></li>
+                            <li><a href="#cara-pesan" class="text-gray-300 hover:text-lime-400 transition-colors">Cara Pesan</a></li>
+                            <li><a href="#kontak" class="text-gray-300 hover:text-lime-400 transition-colors">Kontak</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div>
+                        <h4 class="text-lg font-bold text-lime-400 mb-4">Kontak</h4>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <span class="mr-2">📍</span>
+                                <span class="text-sm">Jl. Pertanian No. 123, Kecamatan, Kota, Indonesia</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">📱</span>
+                                <a href="https://wa.me/6285320302203" target="_blank" class="hover:text-lime-400 transition-colors">
+                                    +62 853-2030-2203
+                                </a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">📷</span>
+                                <a href="https://instagram.com/umusfarm" target="_blank" class="hover:text-lime-400 transition-colors">
+                                    @umusfarm
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="border-t border-stone-700 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                            © 2026 <span class="text-lime-400 font-semibold">Umus Farm</span>. All rights reserved.
+                        </p>
+                        <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                            <span>Dibuat dengan</span>
+                            <span class="text-red-500">❤️</span>
+                            <span>untuk pelanggan setia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial states - ensure elements are visible
+            gsap.set('.product-card', { opacity: 1, y: 0 });
+            gsap.set('.advantage-card', { opacity: 1, y: 0, scale: 1 });
+            gsap.set('.step-card', { opacity: 1, y: 0 });
+            gsap.set('.testimonial-card', { opacity: 1, x: 0 });
+            gsap.set('.section-title', { opacity: 1, y: 0 });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md');
+                    navbar.classList.remove('bg-white/0', 'backdrop-blur-none');
+                } else {
+                    navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md');
+                    navbar.classList.add('bg-white/0', 'backdrop-blur-none');
+                }
+            });
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Close mobile menu if open
+                        if (mobileMenu) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            // Hero Section Animations
+            gsap.from('#hero-title', {
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            gsap.from('#hero-subtitle', {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+
+            gsap.from('#hero-buttons', {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 0.6,
+                ease: 'power3.out'
+            });
+
+            // CTA Button Pulse Animation
+            gsap.to('.cta-primary', {
+                scale: 1.05,
+                duration: 1.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut'
+            });
+
+            // Section Animations with ScrollTrigger - Improved
+            // About Section
+            gsap.utils.toArray('.section-title').forEach(title => {
+                gsap.from(title, {
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top 85%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse',
+                        once: false
+                    },
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                });
+            });
+
+            gsap.from('.section-content', {
+                scrollTrigger: {
+                    trigger: '#tentang',
+                    start: 'top 85%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse',
+                    once: false
+                },
+                opacity: 0,
+                x: -50,
+                duration: 1,
+                ease: 'power2.out'
+            });
+
+            // Products Section - Stagger Animation with fallback
+            const productCards = document.querySelectorAll('.product-card');
+            if (productCards.length > 0) {
+                gsap.from('.product-card', {
+                    scrollTrigger: {
+                        trigger: '#produk',
+                        start: 'top 75%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse',
+                        once: false,
+                        onEnter: () => {
+                            // Ensure visibility
+                            productCards.forEach(card => {
+                                card.style.opacity = '1';
+                                card.style.visibility = 'visible';
+                            });
+                        }
+                    },
+                    opacity: 0,
+                    y: 60,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power2.out',
+                    onComplete: () => {
+                        productCards.forEach(card => {
+                            card.style.opacity = '1';
+                        });
+                    }
+                });
+            }
+
+            // Advantages Section with fallback
+            const advantageCards = document.querySelectorAll('.advantage-card');
+            if (advantageCards.length > 0) {
+                gsap.from('.advantage-card', {
+                    scrollTrigger: {
+                        trigger: '#keunggulan',
+                        start: 'top 75%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse',
+                        once: false,
+                        onEnter: () => {
+                            advantageCards.forEach(card => {
+                                card.style.opacity = '1';
+                                card.style.visibility = 'visible';
+                            });
+                        }
+                    },
+                    opacity: 0,
+                    y: 50,
+                    scale: 0.9,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: 'back.out(1.7)',
+                    onComplete: () => {
+                        advantageCards.forEach(card => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        });
+                    }
+                });
+            }
+
+            // Steps Section with fallback
+            const stepCards = document.querySelectorAll('.step-card');
+            if (stepCards.length > 0) {
+                gsap.from('.step-card', {
+                    scrollTrigger: {
+                        trigger: '#cara-pesan',
+                        start: 'top 75%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse',
+                        once: false,
+                        onEnter: () => {
+                            stepCards.forEach(card => {
+                                card.style.opacity = '1';
+                                card.style.visibility = 'visible';
+                            });
+                        }
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power2.out',
+                    onComplete: () => {
+                        stepCards.forEach(card => {
+                            card.style.opacity = '1';
+                        });
+                    }
+                });
+            }
+
+            // Testimonials Section with fallback
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            if (testimonialCards.length > 0) {
+                gsap.from('.testimonial-card', {
+                    scrollTrigger: {
+                        trigger: '#testimoni',
+                        start: 'top 75%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse',
+                        once: false,
+                        onEnter: () => {
+                            testimonialCards.forEach(card => {
+                                card.style.opacity = '1';
+                                card.style.visibility = 'visible';
+                            });
+                        }
+                    },
+                    opacity: 0,
+                    x: (index) => index % 2 === 0 ? -50 : 50,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power2.out',
+                    onComplete: () => {
+                        testimonialCards.forEach(card => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateX(0)';
+                        });
+                    }
+                });
+            }
+
+            // Contact Section
+            gsap.from('#kontak > div > div', {
+                scrollTrigger: {
+                    trigger: '#kontak',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                    once: false
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power2.out'
+            });
+
+            // Refresh ScrollTrigger after all animations are set
+            ScrollTrigger.refresh();
+        });
+
+        // Fallback: If GSAP fails to load, ensure all elements are visible
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const allCards = document.querySelectorAll('.product-card, .advantage-card, .step-card, .testimonial-card');
+                allCards.forEach(card => {
+                    if (card.style.opacity === '0' || getComputedStyle(card).opacity === '0') {
+                        card.style.opacity = '1';
+                        card.style.visibility = 'visible';
+                    }
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
